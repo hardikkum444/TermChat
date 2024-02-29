@@ -2,7 +2,7 @@
 //community edition ofcourse
 //used a basic template to get started (server temp)
 
-import com.sun.xml.internal.bind.v2.TODO;
+// import com.sun.xml.internal.bind.v2.TODO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +21,7 @@ public class Server implements Runnable{
     private ServerSocket server;
     private boolean done;
     private ExecutorService pool;
+    private int port = 9999;
 
     public Server(){
         connections = new ArrayList<>();
@@ -31,17 +32,17 @@ public class Server implements Runnable{
     public void run(){
 
         try{
-            server = new ServerSocket(9999);
-            System.out.println("Server listening on port 9999..."); //make port dynamic
+            server = new ServerSocket(port);
+            System.out.println("Server listening on port "+port+"..."); //man has made his port dynamic
             pool = Executors.newCachedThreadPool();
             while(!done) {
                 Socket client = server.accept();
                 ConnectionHandler handler = new ConnectionHandler(client);
                 connections.add(handler);
-                pool.execute(handler); //this will run the run method in ConnectionHandler
+                pool.execute(handler); //this will run the run method in ConnectionHandler (something new i learnt)
             }
         } catch(Exception e){
-//            e.printStackTrace();
+//            e.printStackTrace(); not necessary but whatever
             shutdown();
         }
 
@@ -75,6 +76,12 @@ public class Server implements Runnable{
         private BufferedReader in;
         private PrintWriter out;
         private String nickName;
+        public static final String ANSI_RESET = "\u001B[0m";
+        public static final String ANSI_RED = "\u001B[31m";
+        public static final String ANSI_GREEN = "\u001B[32m";
+        public static final String ANSI_PURPLE = "\u001B[35m";
+
+
 
         ConnectionHandler(Socket client){
             this.client = client;
@@ -83,37 +90,44 @@ public class Server implements Runnable{
         @Override
         public void run(){
             try{
-                out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code
+                out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code (heheh)
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-                out.println("Please enter a nickname--> ");
+                out.println("Please enter a nickname --> ");
                 nickName = in.readLine();
 
-                //add if statements for checking exceptions
+                //add if statements for checking exceptions 
                 System.out.println(nickName+" has connected!");  //for server backend
-                broadcast(nickName+" has joined the chat!");
+                broadcast(ANSI_GREEN+nickName+" has joined the chat!"+ANSI_RESET);
+                out.println();
 
                 String message;
                 while((message = in.readLine()) != null){
-                    if(message.startsWith("/nick ")){
+                    if(message.startsWith("/rename ")){
                         String[] messageSplit = message.split(" ",2);
 
-                        if(messageSplit.length == 2){
+                        if(messageSplit.length == 2 && !messageSplit[1].trim().isEmpty()){
 
-                            broadcast(nickName + " renamed themselves to " + messageSplit[1]);
-                            System.out.println(nickName + " renamed themselves to " + messageSplit[1]);
+                            broadcast(ANSI_RED + nickName + " renamed themselves to " + messageSplit[1] + ANSI_RESET);
+                            out.println();
+                            System.out.println(ANSI_RED + nickName + " renamed themselves to " + messageSplit[1] + ANSI_RESET);
 //                          sendMessage("you have now renamed yourself to "+ messageSplit[1]);
                             nickName = messageSplit[1];
                             out.println("you have now renamed yourself to "+ messageSplit[1]);
+                            out.println();
                         }else{
                             out.println("No nickname provided");
                             out.println("Please have a look at the format");
                         }
-                    }else if(message.startsWith("/quit ")){
-                        broadcast(nickName + " has left the chat");
+                    }else if(message.startsWith("/quit")){
+                        broadcast(ANSI_RED + nickName + " has left the chat"+ANSI_RESET);
+                        sendMessage("you have now left the chat!");
                         shutdown();
                     }else {
-                        broadcast(nickName + ": " + message);
+                        out.println();
+                        broadcast(ANSI_PURPLE+nickName + ANSI_RESET + ": " + message);
+                        out.println();
+                        // System.out.println(ANSI_YELLOW + "This text is colored" + ANSI_RESET);
                     }
                 }
 
