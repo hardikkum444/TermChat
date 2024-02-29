@@ -1,3 +1,6 @@
+//CAUTION: code looks too clean (props to IJ)
+//community edition ofcourse
+
 import com.sun.xml.internal.bind.v2.TODO;
 
 import java.io.BufferedReader;
@@ -73,12 +76,14 @@ public class Server implements Runnable{
         @Override
         public void run(){
             try{
-                out = new PrintWriter(client.getOutputStream(), true); //setting auto flush cleaner code
+                out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
                 out.println("Please enter a nickname--> ");
                 nickName = in.readLine();
+
                 //add if statements for checking exceptions
-                System.out.println(nickName+" has connected!");
+                System.out.println(nickName+" has connected!");  //for server backend
                 broadcast(nickName+" has joined the chat!");
 
                 String message;
