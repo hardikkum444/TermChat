@@ -1,5 +1,6 @@
 //CAUTION: code looks too clean (props to IJ)
 //community edition ofcourse
+//used a basic template to get started (server temp)
 
 import com.sun.xml.internal.bind.v2.TODO;
 
@@ -11,12 +12,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server implements Runnable{
 
     private ArrayList<ConnectionHandler> connections;
     private ServerSocket server;
     private boolean done;
+    private ExecutorService pool;
 
     public Server(){
         connections = new ArrayList<>();
@@ -27,13 +31,16 @@ public class Server implements Runnable{
     public void run(){
 
         try{
-            server = new ServerSocket(9000);
+            server = new ServerSocket(9999);
+            System.out.println("Server listening on port 9999..."); //make port dynamic
+            pool = Executors.newCachedThreadPool();
             while(!done) {
                 Socket client = server.accept();
                 ConnectionHandler handler = new ConnectionHandler(client);
                 connections.add(handler);
+                pool.execute(handler); //this will run the run method in ConnectionHandler
             }
-        } catch(IOException e){
+        } catch(Exception e){
 //            e.printStackTrace();
             shutdown();
         }
@@ -111,7 +118,7 @@ public class Server implements Runnable{
                 }
 
             }catch(IOException e){
-                shutdown();
+                shutdown(); //Exception instead of IOException so that server shuts down on any exception
             }
 
         }
@@ -133,5 +140,10 @@ public class Server implements Runnable{
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.run(); //connection handler
     }
 }
