@@ -16,7 +16,7 @@ public class Client implements Runnable{
     public void run() {
 
         try{
-            Socket client = new Socket("172.22.35.51",9999); //if your in the same net, man can then give his own IP
+            Socket client = new Socket("loopback",9999); //if your in the same net, man can then give his own IP
             out = new PrintWriter(client.getOutputStream(),true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             InputHandler inHandler = new InputHandler();
