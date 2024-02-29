@@ -160,4 +160,15 @@ public class Server implements Runnable{
         Server server = new Server();
         server.run(); //connection handler
     }
+
+    //adding the functionality of file uploading
+    public void sendFileServe(String path){
+
+        //set the path
+        //create the file
+        //with the data 
+        //figure out how to write data to the file 
+        //figure out how to download data from the server
+
+    }
 }
