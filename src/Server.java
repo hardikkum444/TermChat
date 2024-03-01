@@ -87,6 +87,8 @@ public class Server implements Runnable{
         public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
         public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
         public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+        public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+
         // public static final String bold = "\033[1m";
         // public static final String 
 
@@ -135,6 +137,8 @@ public class Server implements Runnable{
                         sendMessage("you have now left the chat!");
                         out.println();
                         shutdown();
+                    
+//--------------------------------------------------------------------------------------------------------------------
                     }else if(message.startsWith("/send")){
 
 
@@ -200,6 +204,36 @@ public class Server implements Runnable{
 
 
                     }
+
+//--------------------------------------------------------------------------------------------------------------------
+                    
+                    else if(message.startsWith("/list")){
+
+                        // String currentDirectory = System.getProperty("user.dir");
+                        String folderPath = "/home/man44/Documents/project2/dow";
+                        File dir = new File(folderPath);
+
+                        File[] files = dir.listFiles();
+
+                        if(dir.exists() && dir.isDirectory()){
+
+                            if(files != null && files.length > 0) {
+                                sendMessage(ANSI_CYAN_BACKGROUND + "files you can download --> " + ANSI_RESET);
+
+
+                                for(File file : files){
+                                    sendMessage(file.getName());
+                                }
+                                sendMessage(ANSI_CYAN_BACKGROUND + "use </recieve (fileName.extension)> " + ANSI_RESET);
+                            }else{
+                                sendMessage(ANSI_RED + "Server has no files!" + ANSI_RESET);
+                                sendMessage(ANSI_RED + "Use </send (fileName.extension)> to upload a file!" + ANSI_RESET);
+                            }
+                        }
+
+                    }
+//--------------------------------------------------------------------------------------------------------------------
+
                     else {
                         out.println();
                         broadcast(ANSI_PURPLE_BACKGROUND + nickName + ANSI_RESET + ": " + message);
