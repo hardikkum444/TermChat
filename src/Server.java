@@ -80,6 +80,13 @@ public class Server implements Runnable{
         public static final String ANSI_RED = "\u001B[31m";
         public static final String ANSI_GREEN = "\u001B[32m";
         public static final String ANSI_PURPLE = "\u001B[35m";
+        public static final String ANSI_BLACK = "\u001B[30m";
+
+
+        public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+        public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+        public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+        // public static final String 
 
 
 
@@ -97,8 +104,8 @@ public class Server implements Runnable{
                 nickName = in.readLine();
 
                 //add if statements for checking exceptions 
-                System.out.println(nickName+" has connected!");  //for server backend
-                broadcast(ANSI_GREEN+nickName+" has joined the chat!"+ANSI_RESET);
+                System.out.println(ANSI_GREEN_BACKGROUND + nickName + " has connected!" + ANSI_RESET);  //for server backend
+                broadcast( ANSI_GREEN_BACKGROUND + nickName + " has joined the chat!" + ANSI_RESET);
                 out.println();
 
                 String message;
@@ -108,24 +115,25 @@ public class Server implements Runnable{
 
                         if(messageSplit.length == 2 && !messageSplit[1].trim().isEmpty()){
 
-                            broadcast(ANSI_RED + nickName + " renamed themselves to " + messageSplit[1] + ANSI_RESET);
+                            broadcast( ANSI_RED + nickName + " renamed themselves to " + messageSplit[1] + ANSI_RESET );
                             out.println();
-                            System.out.println(ANSI_RED + nickName + " renamed themselves to " + messageSplit[1] + ANSI_RESET);
+                            System.out.println( ANSI_RED + nickName + " renamed themselves to " + messageSplit[1] + ANSI_RESET );
 //                          sendMessage("you have now renamed yourself to "+ messageSplit[1]);
                             nickName = messageSplit[1];
-                            out.println("you have now renamed yourself to "+ messageSplit[1]);
+                            out.println( ANSI_GREEN + "you have now renamed yourself to "+ messageSplit[1] + ANSI_RESET);
                             out.println();
                         }else{
-                            out.println("No nickname provided");
+                            out.println( ANSI_RED + "No nickname provided" + ANSI_RESET);
                             out.println("Please have a look at the format");
                         }
                     }else if(message.startsWith("/quit")){
-                        broadcast(ANSI_RED + nickName + " has left the chat"+ANSI_RESET);
+                        broadcast(ANSI_RED_BACKGROUND + nickName + " has left the chat"+ANSI_RESET);
+                        System.out.print(ANSI_RED_BACKGROUND+nickName+" has left the chat!"+ANSI_RESET);
                         sendMessage("you have now left the chat!");
                         shutdown();
                     }else {
                         out.println();
-                        broadcast(ANSI_PURPLE+nickName + ANSI_RESET + ": " + message);
+                        broadcast(ANSI_PURPLE_BACKGROUND + nickName + ANSI_RESET + ": " + message);
                         out.println();
                         // System.out.println(ANSI_YELLOW + "This text is colored" + ANSI_RESET);
                     }
