@@ -126,6 +126,15 @@ public class Client implements Runnable{
 
 
                     }
+
+                    else if(message.startsWith("/recieve")){
+
+
+                       String fileName = message.substring("/recieve".length()).trim(); 
+
+
+                    }
+
                     else{
                         out.println(message); //this is then sent to the server
                     }
