@@ -170,6 +170,7 @@ public class Server implements Runnable{
 
                         //dont be a mad man like me and forget to sourround following code with try and catch
                         String currentDirectory = System.getProperty("user.dir");
+                        String folderPath = "/home/man44/Documents/project2/dow";
 
                         // int index1 = message.indexOf("name:")+"name:".length();
                         // int index2 = message.indexOf("/name");
@@ -182,7 +183,7 @@ public class Server implements Runnable{
                         String fileName = chaArr[0];
 
 
-                        File file = new File(currentDirectory, fileName+"."+extension);
+                        File file = new File(folderPath, fileName+"."+extension);
 
                         try {
 
@@ -233,6 +234,41 @@ public class Server implements Runnable{
 
                     }
 //--------------------------------------------------------------------------------------------------------------------
+
+                    else if(message.startsWith("/recieve")){
+
+                        String fileName = message.substring("/recieve".length()).trim();
+                        String folderPath = "/home/man44/Documents/project2/dow";
+
+                        String filePath = "/home/man44/Documents/project2/dow/" + fileName;
+
+
+                        StringBuilder content = new StringBuilder();
+                        try{
+                            BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
+                            String line;
+                            boolean firstLine = true;
+                            while ((line = fileReader.readLine()) != null) {
+                                // if (!firstLine) {
+                                    // content.append("\n"); // Add newline character after the first line
+                                // }
+                                content.append(line).append("\n"); // Append "/send" and the line wtf is actually going on
+                                // firstLine = false; // Set the flag to false after the first line
+                            }
+                        }catch(IOException e){
+                            e.printStackTrace();
+                        }
+
+                            sendMessage(ANSI_RESET+ content.toString() + ANSI_RESET);
+                            // sendMessage(fileName);
+
+
+
+
+
+                    }
+
+
 
                     else {
                         out.println();
