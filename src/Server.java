@@ -131,19 +131,47 @@ public class Server implements Runnable{
                     }else if(message.startsWith("/quit")){
                         broadcast(ANSI_RED_BACKGROUND + nickName + " has left the chat"+ANSI_RESET);
                         System.out.print(ANSI_RED_BACKGROUND+nickName+" has left the chat!"+ANSI_RESET);
+                        System.out.println();
                         sendMessage("you have now left the chat!");
+                        out.println();
                         shutdown();
                     }else if(message.startsWith("/send")){
+
+
+                        // String content = message.substring("/send".length()).trim();
+                        // broadcast(nickName + " has uploaded a file!");
+
+                        String upperLine = message.substring("/send".length()).trim();
+                        String totalName = "";
+                        // Read file content from the client
+                        StringBuilder fileContent = new StringBuilder();
+                        String line;
+                        while (!(line = in.readLine()).isEmpty()) {
+                            
+                            line = line.replace("/send ","");
+
+                            if(line.contains(".")){
+                                totalName = line;
+                            }else{
+                            fileContent.append(line).append("\n");
+                            // broadcast(line);
+                        }
+
+                        }
+                        
+                        // broadcast(fileName);
+
+                        // broadcast(fileContent.toString());
 
 
                         //dont be a mad man like me and forget to sourround following code with try and catch
                         String currentDirectory = System.getProperty("user.dir");
 
-                        int index1 = message.indexOf("name:")+"name:".length();
-                        int index2 = message.indexOf("/name");
-                        String totalName = message.substring(index1,index2);
+                        // int index1 = message.indexOf("name:")+"name:".length();
+                        // int index2 = message.indexOf("/name");
+                        // String totalName = message.substring(index1,index2);
 
-                        // sendMessage("name of the file is " + filename2); 
+                        // // sendMessage("name of the file is " + filename2); 
 
                         String[] chaArr = totalName.split("\\.");
                         String extension = chaArr[1];
@@ -155,14 +183,20 @@ public class Server implements Runnable{
                         try {
 
                             if (file.createNewFile()) {
-                                broadcast("New file has been created!");
+                                broadcast(ANSI_GREEN + "File successfully uploaded to server!" + ANSI_RESET);
+                                FileWriter fileWriter = new FileWriter(file);
+                                fileWriter.write(fileContent.toString());
+                                fileWriter.close();
+
                             } else {
-                                broadcast("File already exists.");
+                                broadcast(ANSI_RED + "File already exists." + ANSI_RESET);
                             }
+
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
 
 
                     }
