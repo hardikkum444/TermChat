@@ -14,6 +14,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.*;
 
 public class Server implements Runnable{
 
@@ -86,6 +87,7 @@ public class Server implements Runnable{
         public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
         public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
         public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+        // public static final String bold = "\033[1m";
         // public static final String 
 
 
@@ -100,7 +102,7 @@ public class Server implements Runnable{
                 out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code (heheh)
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-                out.println("Please enter a nickname --> ");
+                out.println("Please enter a nickname --> " );
                 nickName = in.readLine();
 
                 //add if statements for checking exceptions 
@@ -131,7 +133,40 @@ public class Server implements Runnable{
                         System.out.print(ANSI_RED_BACKGROUND+nickName+" has left the chat!"+ANSI_RESET);
                         sendMessage("you have now left the chat!");
                         shutdown();
-                    }else {
+                    }else if(message.startsWith("/send")){
+
+
+                        //dont be a mad man like me and forget to sourround following code with try and catch
+                        String currentDirectory = System.getProperty("user.dir");
+
+                        int index1 = message.indexOf("name:")+"name:".length();
+                        int index2 = message.indexOf("/name");
+                        String totalName = message.substring(index1,index2);
+
+                        // sendMessage("name of the file is " + filename2); 
+
+                        String[] chaArr = totalName.split("\\.");
+                        String extension = chaArr[1];
+                        String fileName = chaArr[0];
+
+
+                        File file = new File(currentDirectory, fileName+"."+extension);
+
+                        try {
+
+                            if (file.createNewFile()) {
+                                broadcast("New file has been created!");
+                            } else {
+                                broadcast("File already exists.");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                    else {
                         out.println();
                         broadcast(ANSI_PURPLE_BACKGROUND + nickName + ANSI_RESET + ": " + message);
                         out.println();
