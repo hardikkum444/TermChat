@@ -101,10 +101,48 @@ public class Server implements Runnable{
         @Override
         public void run(){
             try{
+                
+                
+
                 out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code (heheh)
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-                out.println("Please enter a nickname --> " );
+
+//--------------------------------------------------------------------------------------------------------------------
+                out.println("\033[H\033[2J");
+
+
+                        // String asciiArt = " /$$$$$$$$                                 /$$$$$$  /$$                   /$$    \n" +
+                        //   "|__  $$__/                                /$$__  $$| $$                  | $$    \n" +
+                        //   "   | $$  /$$$$$$   /$$$$$$  /$$$$$$/$$$$ | $$  \\__/| $$$$$$$   /$$$$$$  /$$$$$$  \n" +
+                        //   "   | $$ /$$__  $$ /$$__  $$| $$_  $$_  $$| $$      | $$__  $$ |____  $$|_  $$_/  \n" +
+                        //   "   | $$| $$$$$$$$| $$  \\__/| $$ \\ $$ \\ $$| $$      | $$  \\ $$  /$$$$$$$  | $$    \n" +
+                        //   "   | $$| $$_____/| $$      | $$ | $$ | $$| $$    $$| $$  | $$ /$$__  $$  | $$ /$$\n" +
+                        //   "   | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$/| $$  | $$|  $$$$$$$  |  $$$$/\n" +
+                        //   "   |__/ \\_______/|__/      |__/ |__/ |__/ \\______/ |__/  |__/ \\_______/   \\___/  \n" +
+                        //   "                                                                                   \n" +
+                        //   "                                                                                   \n";
+
+
+                //sadly java inst like python (which is a good thing!), i had to manually print this, since there aint no such ascii art printing lib in java
+                //there is but i would have to add it externally as a .jar or add it to pom.xml
+        
+        String asciiArt = "\u001B[95m /$$$$$$$$                                 /$$$$$$  /$$                   /$$    \n" +
+                          "|__  $$__/                                /$$__  $$| $$                  | $$    \n" +
+                          "   | $$  /$$$$$$   /$$$$$$  /$$$$$$/$$$$ | $$  \\__/| $$$$$$$   /$$$$$$  /$$$$$$  \n" +
+                          "   | $$ /$$__  $$ /$$__  $$| $$_  $$_  $$| $$      | $$__  $$ |____  $$|_  $$_/  \n" +
+                          "   | $$| $$$$$$$$| $$  \\__/| $$ \\ $$ \\ $$| $$      | $$  \\ $$  /$$$$$$$  | $$    \n" +
+                          "   | $$| $$_____/| $$      | $$ | $$ | $$| $$    $$| $$  | $$ /$$__  $$  | $$ /$$\n" +
+                          "   | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$/| $$  | $$|  $$$$$$$  |  $$$$/\n" +
+                          "   |__/ \\_______/|__/      |__/ |__/ |__/ \\______/ |__/  |__/ \\_______/   \\___/  \n" +
+                          "                                                                                   \n" +
+                          "                                                                                   \u001B[94m\n";
+                out.println(asciiArt);
+
+//--------------------------------------------------------------------------------------------------------------------
+
+
+                out.println("Please enter a nickname --> " + ANSI_RESET);
                 nickName = in.readLine();
 
                 //add if statements for checking exceptions 
@@ -303,7 +341,12 @@ public class Server implements Runnable{
 
     }
 
+
+
     public static void main(String[] args) {
+        // clearScreen();
+        // System.out.print("\033[H\033[2J");
+        // System.out.flush();
         Server server = new Server();
         server.run(); //connection handler
     }
@@ -318,4 +361,24 @@ public class Server implements Runnable{
         //figure out how to download data from the server
 
     }
+
+    // public static void startScreen(){
+
+    //     out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code (heheh)
+        
+    //     out.println("\033[H\033[2J");
+
+    //                     String asciiArt = " /$$$$$$$$                                 /$$$$$$  /$$                   /$$    \n" +
+    //                       "|__  $$__/                                /$$__  $$| $$                  | $$    \n" +
+    //                       "   | $$  /$$$$$$   /$$$$$$  /$$$$$$/$$$$ | $$  \\__/| $$$$$$$   /$$$$$$  /$$$$$$  \n" +
+    //                       "   | $$ /$$__  $$ /$$__  $$| $$_  $$_  $$| $$      | $$__  $$ |____  $$|_  $$_/  \n" +
+    //                       "   | $$| $$$$$$$$| $$  \\__/| $$ \\ $$ \\ $$| $$      | $$  \\ $$  /$$$$$$$  | $$    \n" +
+    //                       "   | $$| $$_____/| $$      | $$ | $$ | $$| $$    $$| $$  | $$ /$$__  $$  | $$ /$$\n" +
+    //                       "   | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$/| $$  | $$|  $$$$$$$  |  $$$$/\n" +
+    //                       "   |__/ \\_______/|__/      |__/ |__/ |__/ \\______/ |__/  |__/ \\_______/   \\___/  \n" +
+    //                       "                                                                                   \n" +
+    //                       "                                                                                   \n";
+    //     out.println(asciiArt);
+    // }
+
 }
