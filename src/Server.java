@@ -110,22 +110,6 @@ public class Server implements Runnable{
 
 //--------------------------------------------------------------------------------------------------------------------
                 out.println("\033[H\033[2J");
-
-
-                        // String asciiArt = " /$$$$$$$$                                 /$$$$$$  /$$                   /$$    \n" +
-                        //   "|__  $$__/                                /$$__  $$| $$                  | $$    \n" +
-                        //   "   | $$  /$$$$$$   /$$$$$$  /$$$$$$/$$$$ | $$  \\__/| $$$$$$$   /$$$$$$  /$$$$$$  \n" +
-                        //   "   | $$ /$$__  $$ /$$__  $$| $$_  $$_  $$| $$      | $$__  $$ |____  $$|_  $$_/  \n" +
-                        //   "   | $$| $$$$$$$$| $$  \\__/| $$ \\ $$ \\ $$| $$      | $$  \\ $$  /$$$$$$$  | $$    \n" +
-                        //   "   | $$| $$_____/| $$      | $$ | $$ | $$| $$    $$| $$  | $$ /$$__  $$  | $$ /$$\n" +
-                        //   "   | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$/| $$  | $$|  $$$$$$$  |  $$$$/\n" +
-                        //   "   |__/ \\_______/|__/      |__/ |__/ |__/ \\______/ |__/  |__/ \\_______/   \\___/  \n" +
-                        //   "                                                                                   \n" +
-                        //   "                                                                                   \n";
-
-
-                //sadly java inst like python (which is a good thing!), i had to manually print this, since there aint no such ascii art printing lib in java
-                //there is but i would have to add it externally as a .jar or add it to pom.xml
         
         String asciiArt = "\u001B[95m /$$$$$$$$                                 /$$$$$$  /$$                   /$$    \n" +
                           "|__  $$__/                                /$$__  $$| $$                  | $$    \n" +
@@ -136,13 +120,14 @@ public class Server implements Runnable{
                           "   | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$/| $$  | $$|  $$$$$$$  |  $$$$/\n" +
                           "   |__/ \\_______/|__/      |__/ |__/ |__/ \\______/ |__/  |__/ \\_______/   \\___/  \n" +
                           "                                                                                   \n" +
-                          "                                                                                   \u001B[94m\n";
+                          "                                                                                   \u001B[94m";
+                asciiArt += "\u001B[1m\u001B[33m-by hardik\n\n \u001B[94m"; // Subscript for "- hardik"
                 out.println(asciiArt);
 
 //--------------------------------------------------------------------------------------------------------------------
 
 
-                out.println("Please enter a nickname --> " + ANSI_RESET);
+                out.println("What would you like to be called? *--*> " + ANSI_RESET);
                 nickName = in.readLine();
 
                 //add if statements for checking exceptions 
@@ -187,6 +172,8 @@ public class Server implements Runnable{
                         String totalName = "";
                         // Read file content from the client
                         StringBuilder fileContent = new StringBuilder();
+                        upperLine = upperLine.replace("/send ","");
+                        fileContent.append(upperLine).append("\n");
                         String line;
                         while (!(line = in.readLine()).isEmpty()) {
                             
@@ -226,7 +213,7 @@ public class Server implements Runnable{
                         try {
 
                             if (file.createNewFile()) {
-                                broadcast(ANSI_GREEN + "File successfully uploaded to server!" + ANSI_RESET);
+                                broadcast(ANSI_GREEN + nickName + " has successfully uploaded a file to server!" + ANSI_RESET);
                                 FileWriter fileWriter = new FileWriter(file);
                                 fileWriter.write(fileContent.toString());
                                 fileWriter.close();
@@ -290,24 +277,46 @@ public class Server implements Runnable{
                                 // if (!firstLine) {
                                     // content.append("\n"); // Add newline character after the first line
                                 // }
-                                content.append(line).append("\n"); // Append "/send" and the line wtf is actually going on
+                                content.append(line).append("\n");
+                                content.append("/upload ").append(line); // Append "/send" and the line wtf is actually going on
                                 // firstLine = false; // Set the flag to false after the first line
                             }
                         }catch(IOException e){
                             e.printStackTrace();
                         }
 
-                            sendMessage(ANSI_RESET+ content.toString() + ANSI_RESET);
+                            sendMessage(content.toString());
+                            sendMessage(fileName);
                             // sendMessage(fileName);
 
 
 
 
 
+
+//--------------------------------------------------------------------------------------------------------------------
+                    }else if(message.startsWith("/help")){
+
+                        String asciiTable = 
+                    ".──────────────────────────────────────────────────────────.\n" +
+                    "| Command   | Description                                  |\n" +
+                    "|───────────|──────────────────────────────────────────────|\n" +
+                    "| /list     | List all available files on the server.      |\n" +
+                    "| /help     | if youre clueless                            |\n" +
+                    "| /send     | </send (fileName.extension)> to upload       |\n" +
+                    "| /receive  | </reciev (fileName.extension)> to upload     |\n" +
+                    "| /rename   | Change your chatname                         |\n" +
+                    "'───────────'──────────────────────────────────────────────'\n";
+
+                        out.println();
+                        out.println();
+
+                        out.println(asciiTable);
+
                     }
 
 
-
+//--------------------------------------------------------------------------------------------------------------------
                     else {
                         out.println();
                         broadcast(ANSI_PURPLE_BACKGROUND + nickName + ANSI_RESET + ": " + message);
@@ -351,16 +360,8 @@ public class Server implements Runnable{
         server.run(); //connection handler
     }
 
-    //adding the functionality of file uploading
-    public void sendFileServe(String path){
 
-        //set the path
-        //create the file
-        //with the data 
-        //figure out how to write data to the file 
-        //figure out how to download data from the server
 
-    }
 
     // public static void startScreen(){
 
