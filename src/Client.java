@@ -12,6 +12,10 @@ public class Client implements Runnable{
     private BufferedReader in;
     private PrintWriter out;
     private boolean done;
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PINK = "\033[95m";
 
     @Override
     public void run() {
@@ -30,9 +34,12 @@ public class Client implements Runnable{
 
 			String inMessage;
 			while ((inMessage = in.readLine()) != null) {
-			    if (inMessage.startsWith("/updload")) {
+			    if (inMessage.startsWith("/upload")) {
 			        String totalName = "";
 			        StringBuilder fileContent = new StringBuilder();
+                    // String temp = inMessage;
+                    String upperLine = inMessage.substring("/upload".length()).trim();
+                    fileContent.append(upperLine).append("\n");
 
 			        while (true) {
 			            String line = in.readLine();
@@ -72,7 +79,7 @@ public class Client implements Runnable{
                     
                     // Print file content for each upload
                     // System.out.println("File content:");
-                    System.out.println(fileContent.toString());
+                    // System.out.println(fileContent.toString());
                     // System.out.println("Total name: " + totalName);
 
                      String currentDirectory = System.getProperty("user.dir");
@@ -91,10 +98,38 @@ public class Client implements Runnable{
                       FileWriter fileWriter = new FileWriter(file);
                       fileWriter.write(fileContent.toString());
                       fileWriter.close();
-                      System.out.println("File Successfuly downloaded");
+
+
+                        int inter = 50;
+                        int delay = 30;
+                        System.out.print(ANSI_PINK + "Loading-> [");
+
+                        for(int i =0;i<=inter;i++){
+                            
+                            System.out.print("==");
+
+                            System.out.flush();
+
+                            try{
+                                if(i==20 || i==30){
+                                    delay = 500;
+                                }
+                                Thread.sleep(delay);
+                                delay = 30;
+                            }catch(InterruptedException e){
+                                e.printStackTrace();
+                                System.out.println("Error!!!");
+                                Thread.currentThread().interrupt();
+                            }
+                        }
+
+                      System.out.print("]" + ANSI_RESET);
+                      System.out.println();
+                      System.out.flush();
+                      System.out.println(ANSI_GREEN + "You have successfully downloaded the file" + ANSI_RESET);
 
                        } else {
-                                System.out.println("File already exists.");
+                                System.out.println(ANSI_RED + "File cant be downloaded, ERROR!!." + ANSI_RESET);
                        }
 
 
@@ -151,7 +186,49 @@ public class Client implements Runnable{
                     if(message.equals("/quit")){
                         inReader.close();
                         shutdown();
+
                     }else if(message.startsWith("/send")){    
+
+
+                        int inter = 50;
+                        int delay = 30;
+                        System.out.print("Loading-> [");
+
+                        for(int i =0;i<=inter;i++){
+                            
+                            System.out.print("==");
+
+                            System.out.flush();
+
+                            try{
+                                if(i==20 || i==30){
+                                    delay = 500;
+                                }
+                                Thread.sleep(delay);
+                                delay = 30;
+                            }catch(InterruptedException e){
+                                e.printStackTrace();
+                                System.out.println("Error!!!");
+                                Thread.currentThread().interrupt();
+                            }
+                        }
+
+
+                        System.out.print("]");
+                        System.out.println();
+                        System.out.flush();
+
+
+
+
+
+
+
+
+
+
+
+
 
                         
 
