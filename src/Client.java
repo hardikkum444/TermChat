@@ -28,10 +28,94 @@ public class Client implements Runnable{
             Thread t = new Thread(inHandler);
             t.start();
 
-            String inMessage;
-            while((inMessage = in.readLine()) != null) {
-                System.out.println(inMessage);
+			String inMessage;
+			while ((inMessage = in.readLine()) != null) {
+			    if (inMessage.startsWith("/updload")) {
+			        String totalName = "";
+			        StringBuilder fileContent = new StringBuilder();
+
+			        while (true) {
+			            String line = in.readLine();
+			            if (line == null || line.isEmpty()) {
+			                // Exit the loop if the line is null or empty
+			                break;
+			            }
+
+			            // Remove the "/upload " prefix from each line
+			            line = line.replace("/upload ", "");
+
+			            if (line.contains(".")) {
+			                // If the line contains ".", set totalName and exit the loop
+			                totalName = line;
+			                break;
+			            }
+
+			            // Append the line to fileContent
+			            fileContent.append(line.trim()).append("\n"); // Trim leading and trailing whitespace
+			        }
+
+                        // while (!(line = in.readLine()).isEmpty()) {
+                            
+                        //     line = line.replace("/send ","");
+
+                        //     if(line.contains(".")){
+                        //         totalName = line;
+                        //     }else{
+                        //     fileContent.append(line).append("\n");
+                        //     // broadcast(line);
+                        // }
+
+                        // }
+
+
+
+                    
+                    // Print file content for each upload
+                    // System.out.println("File content:");
+                    System.out.println(fileContent.toString());
+                    // System.out.println("Total name: " + totalName);
+
+                     String currentDirectory = System.getProperty("user.dir");
+
+                     String[] chaArr = totalName.split("\\.");
+                     String extension = chaArr[1];
+                     String fileName = chaArr[0];
+
+
+                     File file = new File(currentDirectory, fileName+"."+extension);
+
+                      try {
+
+                      if (file.createNewFile()) {
+                      // broadcast(ANSI_GREEN + "File successfully uploaded to server!" + ANSI_RESET);
+                      FileWriter fileWriter = new FileWriter(file);
+                      fileWriter.write(fileContent.toString());
+                      fileWriter.close();
+                      System.out.println("File Successfuly downloaded");
+
+                       } else {
+                                System.out.println("File already exists.");
+                       }
+
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+
+
+
+
+                    
+                } else {
+                    System.out.println(inMessage);
+                }
             }
+
         }catch(IOException e){
             e.printStackTrace();
             System.out.println("error is occuring");
@@ -126,15 +210,6 @@ public class Client implements Runnable{
 
 
                     }
-
-                    else if(message.startsWith("/recieve")){
-
-
-                       String fileName = message.substring("/recieve".length()).trim(); 
-
-
-                    }
-
                     else{
                         out.println(message); //this is then sent to the server
                     }
@@ -290,92 +365,3 @@ public class Client implements Runnable{
 
 
 
-
-// import java.io.BufferedReader;
-// import java.io.IOException;
-// import java.io.InputStreamReader;
-// import java.io.PrintWriter;
-// import java.net.Socket;
-// //import java.sql.SQLOutput;
-
-// public class Client implements Runnable{
-
-//     private Socket client;
-//     private BufferedReader in;
-//     private PrintWriter out;
-//     private boolean done;
-
-//     @Override
-//     public void run() {
-
-//         try{
-//             Socket client = new Socket("loopback",9999); //if your in the same net, man can then give his own IP
-//             out = new PrintWriter(client.getOutputStream(),true);
-//             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//             InputHandler inHandler = new InputHandler();
-
-//             //using the runnable functionality instead of directly using a thread
-//             //this is done normally if man wants to inject Threads
-            
-//             Thread t = new Thread(inHandler);
-//             t.start();
-
-//             String inMessage;
-//             while((inMessage = in.readLine()) != null) {
-//                 System.out.println(inMessage);
-//             }
-//         }catch(IOException e){
-//             e.printStackTrace();
-//             System.out.println("error is occuring");
-//             shutdown();
-
-//         }
-
-//     }
-
-//     public void shutdown(){
-
-//         done = true;
-//         try{
-//             in.close();
-//             out.close();
-//             if(!client.isClosed()){
-//                 client.close();
-//             }
-//         }catch(IOException e){
-//             //man will handle shutdown
-
-//         }
-//     }
-
-//     class InputHandler implements Runnable {
-
-//         @Override
-//         public void run() {
-//             try{
-//                 BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
-//                 while(!done){
-//                     String message = inReader.readLine();
-//                     if(message.equals("/quit")){
-//                         inReader.close();
-//                         shutdown();
-//                     }else{
-//                         out.println(message); //this is then sent to the server
-//                     }
-//                 }
-//             }catch(IOException e){
-//                 shutdown();
-//             }
-//         }
-
-// //        public void shutdown(){
-// //
-// //
-// //        }
-//     }
-
-//     public static void main(String[] args) {
-//         Client client = new Client();
-//         client.run();
-//     }
-// }
