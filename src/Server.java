@@ -274,12 +274,16 @@ public class Server implements Runnable{
                             String line;
                             boolean firstLine = true;
                             while ((line = fileReader.readLine()) != null) {
-                                // if (!firstLine) {
-                                    // content.append("\n"); // Add newline character after the first line
-                                // }
-                                content.append(line).append("\n");
-                                content.append("/upload ").append(line); // Append "/send" and the line wtf is actually going on
-                                // firstLine = false; // Set the flag to false after the first line
+                                if (!firstLine) {
+                                    content.append("\n"); // Add newline character after the first line
+                                    content.append("/upload ").append(line); // Append "/send" and the line wtf is actually going on
+                                }else{
+
+                                    content.append("/upload ").append(line);
+                                    // firstLine = false;
+                                }
+                                firstLine = false; // Set the flag to false after the first line
+
                             }
                         }catch(IOException e){
                             e.printStackTrace();
@@ -306,6 +310,7 @@ public class Server implements Runnable{
                     "| /send     | </send (fileName.extension)> to upload       |\n" +
                     "| /receive  | </reciev (fileName.extension)> to upload     |\n" +
                     "| /rename   | Change your chatname                         |\n" +
+                    "| /quit     | To leave the chat room                       |\n" +
                     "'───────────'──────────────────────────────────────────────'\n";
 
                         out.println();
@@ -359,27 +364,5 @@ public class Server implements Runnable{
         Server server = new Server();
         server.run(); //connection handler
     }
-
-
-
-
-    // public static void startScreen(){
-
-    //     out = new PrintWriter(client.getOutputStream(), true); //setting auto flush for cleaner code (heheh)
-        
-    //     out.println("\033[H\033[2J");
-
-    //                     String asciiArt = " /$$$$$$$$                                 /$$$$$$  /$$                   /$$    \n" +
-    //                       "|__  $$__/                                /$$__  $$| $$                  | $$    \n" +
-    //                       "   | $$  /$$$$$$   /$$$$$$  /$$$$$$/$$$$ | $$  \\__/| $$$$$$$   /$$$$$$  /$$$$$$  \n" +
-    //                       "   | $$ /$$__  $$ /$$__  $$| $$_  $$_  $$| $$      | $$__  $$ |____  $$|_  $$_/  \n" +
-    //                       "   | $$| $$$$$$$$| $$  \\__/| $$ \\ $$ \\ $$| $$      | $$  \\ $$  /$$$$$$$  | $$    \n" +
-    //                       "   | $$| $$_____/| $$      | $$ | $$ | $$| $$    $$| $$  | $$ /$$__  $$  | $$ /$$\n" +
-    //                       "   | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$/| $$  | $$|  $$$$$$$  |  $$$$/\n" +
-    //                       "   |__/ \\_______/|__/      |__/ |__/ |__/ \\______/ |__/  |__/ \\_______/   \\___/  \n" +
-    //                       "                                                                                   \n" +
-    //                       "                                                                                   \n";
-    //     out.println(asciiArt);
-    // }
 
 }
