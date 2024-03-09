@@ -54,7 +54,7 @@ It utilizes Java socket programming to establish connections and facilitate comm
 
 ## Contributions
 
-*1> There still are some bugs that are pending to be fixed in this halariously unclean code* <br>
+*1> There still are some bugs that are pending to be fixed in this hilariously unclean code* <br>
 *2> That being contributions are welcome* <br>
 *3> If you notice any bugs please note that the bug fixes are on their way* <br>
 *4> Also the spelling of receive is wrong (recieve and not receive) (please use /recieve ... bug fixes are on their way!* <br>
