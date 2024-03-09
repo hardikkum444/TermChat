@@ -1,6 +1,6 @@
 # Welcome to TermChat
 
-<center><img src="/photos/termchat1.png" alt="Image Description"><br><br></center> <br><br>
+<center><img src="/photos/termchat1.png" alt="Image Description"><br><br></center> <br>
 
 
 
