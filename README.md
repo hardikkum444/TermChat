@@ -32,9 +32,15 @@ It utilizes Java socket programming to establish connections and facilitate comm
    - To download a file from the server, use the `/receive` command followed by the file name.
 
 5. **Commands**:
-   - `/rename <new_name>`: Change your nickname.
-   - `/quit`: Disconnect from the chat room.
-   - `/list`: List all available files on the server.
-   - `/help`: Display a list of available commands.
+
+   | Command   | Description                                  |
+   |-----------|----------------------------------------------|
+   | /list     | List all available files on the server.      |
+   | /help     | If you're clueless                           |
+   | /send     | `</send (fileName.extension)>` to upload     |
+   | /receive  | `</receive (fileName.extension)>` to download|
+   | /rename   | Change your chatname                         |
+   | /quit     | To leave the chat room                       |
+
   
   
