@@ -4,7 +4,7 @@
 
 
 
-# What is termchat?
+# What is TermChat?
 
 TermChat is a terminal-based chatting server application written in Java. 
 It utilizes Java socket programming to establish connections and facilitate communication between clients.
