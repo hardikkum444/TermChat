@@ -21,7 +21,8 @@ It utilizes Java socket programming to establish connections and facilitate comm
    - The server will listen for incoming connections on a dynamically assigned port (default port: 9999).
 
 2. **Connecting to the Server**:
-   - Clients can connect to the server using any terminal-based client application or Telnet.
+   - Clients can connect simpy by compling the Client.java file and running it!
+   - **make sure that in the clinet file you add the appropriate IP (public) of the server!**
    - Upon connection, clients will be prompted to enter a nickname.
 
 3. **Sending Messages**:
@@ -53,6 +54,7 @@ It utilizes Java socket programming to establish connections and facilitate comm
 **there still are some bugs that are pending to be fixed in this halariously unclean code**
 **and therefore contributions are welcome**
 **if you notice any bugs please note that the bug fixes are on their way**
+**also the spelling of receive is wrong (recieve and not receive) (please use /recieve ... bug fixes are on their way!**
 
 ## License
 
