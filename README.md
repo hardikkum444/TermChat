@@ -1,7 +1,10 @@
+# Welcome to TermChat
+
 <center><img src="/photos/termchat1.png" alt="Image Description"><br><br></center> <br><br>
 
 
-# Welcome to TermChat
+
+# What is termchat?
 
 TermChat is a terminal-based chatting server application written in Java. 
 It utilizes Java socket programming to establish connections and facilitate communication between clients.
@@ -51,10 +54,10 @@ It utilizes Java socket programming to establish connections and facilitate comm
 
 ## Contributions
 
-**there still are some bugs that are pending to be fixed in this halariously unclean code**
-**and therefore contributions are welcome**
-**if you notice any bugs please note that the bug fixes are on their way**
-**also the spelling of receive is wrong (recieve and not receive) (please use /recieve ... bug fixes are on their way!**
+**1> There still are some bugs that are pending to be fixed in this halariously unclean code**
+**2> That being contributions are welcome**
+**3> If you notice any bugs please note that the bug fixes are on their way** 
+**4> Also the spelling of receive is wrong (recieve and not receive) (please use /recieve ... bug fixes are on their way!**
 
 ## License
 
