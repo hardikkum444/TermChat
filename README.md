@@ -42,5 +42,23 @@ It utilizes Java socket programming to establish connections and facilitate comm
    | /rename   | Change your chatname                         |
    | /quit     | To leave the chat room                       |
 
+
+## Requirements
+
+- Java Development Kit (JDK) (anything >=8 works like a charm)
+- Terminal or Command Prompt
+
+## Contributions
+
+**there still are some bugs that are pending to be fixed in this halariously unclean code**
+**and therefore contributions are welcome**
+**if you notice any bugs please note that the bug fixes are on their way**
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+
+
   
   
