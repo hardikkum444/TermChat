@@ -59,11 +59,7 @@ It utilizes Java socket programming to establish connections and facilitate comm
 *3> If you notice any bugs please note that the bug fixes are on their way* <br>
 *4> Also the spelling of receive is wrong (recieve and not receive) (please use /recieve ... bug fixes are on their way!* <br>
 
-## License
-
-## License
-
-This project is licensed under the [MIT License](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt).
+[MIT License](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt).
 
 
 
